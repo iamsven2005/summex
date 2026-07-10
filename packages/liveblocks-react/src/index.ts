@@ -101,6 +101,7 @@ export {
   useUpdateFeedMessage,
   useSearchComments,
   useAttachmentUrl,
+  useFileUrl,
   useHistoryVersions,
   useRoomSubscriptionSettings,
 } from "./room";

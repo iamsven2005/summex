@@ -33,6 +33,7 @@ export type {
   RoomsQueryCriteria,
   RoomUser,
   SetPresenceOptions,
+  StorageFileUrl,
   ThreadParticipants,
   UpdateAiCopilotOptions,
   UpdateFeedMessageOptions,
@@ -110,6 +111,8 @@ export {
   LiveList,
   LiveMap,
   LiveObject,
+  LiveFile,
+  type LiveFileData,
   stringifyCommentBody,
 } from "@liveblocks/core";
 
