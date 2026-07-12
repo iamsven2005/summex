@@ -21,7 +21,7 @@
     "@liveblocks/redux": "workspace:*",
     "@liveblocks/yjs": "workspace:*",
     "@liveblocks/zustand": "workspace:*",
-    "@reduxjs/toolkit": "^2.8.2",
+    "@reduxjs/toolkit": "^2.12.0",
     "encoding": "^0.1.13",
     "next": "16.1.4",
     "react": "^18.2.0",
