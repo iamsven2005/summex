@@ -10,6 +10,7 @@ import { TRANSFORMERS } from "@lexical/markdown";
 import { CodeNode } from "@lexical/code";
 import { LinkNode } from "@lexical/link";
 import { HorizontalRuleNode } from "@lexical/react/LexicalHorizontalRuleNode";
+import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import {
@@ -25,6 +26,8 @@ import DraggableBlockPlugin from "../plugins/DraggableBlockPlugin";
 import { PreserveSelectionPlugin } from "../plugins/PreserveSelectionPlugin";
 import { DocumentName } from "./DocumentName";
 import { FloatingToolbar } from "./FloatingToolbar";
+import { SlashCommandPlugin } from "./SlashCommandPlugin";
+import { SearchPlugin } from "./SearchPlugin";
 
 // Wrap your initial config with `liveblocksConfig`
 const initialConfig = liveblocksConfig({
@@ -37,6 +40,9 @@ const initialConfig = liveblocksConfig({
     ListItemNode,
     HeadingNode,
     QuoteNode,
+    TableNode,
+    TableRowNode,
+    TableCellNode,
   ],
   onError: (error: unknown) => {
     console.error(error);
@@ -143,6 +149,8 @@ export function Editor() {
           </div>
           <PreserveSelectionPlugin />
           <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+          <SlashCommandPlugin />
+          <SearchPlugin />
         </LiveblocksPlugin>
       </div>
     </LexicalComposer>

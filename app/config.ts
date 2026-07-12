@@ -1,7 +1,9 @@
 import { openai } from "@ai-sdk/openai";
 import { LanguageModel } from "ai";
 
-export const aiModel: LanguageModel = openai("gpt-5.2-codex");
+// Use a vision-capable model for image support
+export const aiModel: LanguageModel = openai("gpt-4o");
+export const aiVisionModel: LanguageModel = openai("gpt-4o");
 
 export function getRoomId(pageId: string) {
   return `liveblocks:examples:${pageId}`;

@@ -17,6 +17,7 @@ import { ItalicIcon } from "../icons/ItalicIcon";
 import { UnderlineIcon } from "../icons/UnderlineIcon";
 import { StrikethroughIcon } from "../icons/StrikethroughIcon";
 import { CodeIcon } from "../icons/CodeIcon";
+import { INSERT_TABLE_COMMAND } from "@lexical/table";
 
 // Options in the toolbar's dropdown
 const DROPDOWN_OPTIONS = [
@@ -51,6 +52,10 @@ const DROPDOWN_OPTIONS = [
   {
     id: "h6",
     text: "Heading 6",
+  },
+  {
+    id: "table",
+    text: "Table",
   },
 ];
 
@@ -101,11 +106,18 @@ export function FloatingToolbarOptions({
         return $setBlocksType(selection, () => $createHeadingNode("h6"));
       }
 
+      if (type === "table") {
+        return editor.dispatchCommand(INSERT_TABLE_COMMAND, {
+          columns: "3",
+          rows: "3",
+        });
+      }
+
       if (type === "quote") {
         return $setBlocksType(selection, () => $createQuoteNode());
       }
     },
-    [activeBlock]
+    [activeBlock, editor]
   );
 
   return (

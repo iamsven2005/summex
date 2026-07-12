@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { useState } from "react";
 import { TypedRoomDataWithInfo } from "../utils/liveblocks";
 import { usePageLinks } from "../hooks/usePageLinks";
 
@@ -10,7 +11,7 @@ export function PageLinks() {
   const pathname = usePathname();
 
   // Fetch all pages for sidebar
-  const { data, error, isLoading, size, setSize, reachedEnd, isLoadingMore } =
+  const { data, error, isLoading, size, setSize, reachedEnd, isLoadingMore, mutate } =
     usePageLinks();
 
   if (error) {
@@ -47,6 +48,7 @@ export function PageLinks() {
             key={room.id}
             room={room}
             active={pathname === `/${room.metadata.pageId}`}
+            onDelete={() => mutate()}
           />
         ))
       )}
@@ -67,10 +69,29 @@ export function PageLinks() {
 function PageLink({
   room,
   active,
+  onDelete,
 }: {
   room: TypedRoomDataWithInfo;
   active: boolean;
+  onDelete?: () => void;
 }) {
+  const [deleting, setDeleting] = useState(false);
+
+  const handleDelete = async () => {
+    if (!confirm("Delete this page? This action cannot be undone.")) return;
+    setDeleting(true);
+    try {
+      const res = await fetch(`/api/rooms/${room.id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error(await res.text());
+      if (onDelete) onDelete();
+    } catch (err) {
+      console.error("Failed to delete room", err);
+      alert("Failed to delete page");
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   return (
     <div
       data-active={active || undefined}
@@ -81,6 +102,15 @@ function PageLink({
           <div className="italic font-normal">Empty title</div>
         )}
       </Link>
+
+      <button
+        onClick={handleDelete}
+        disabled={deleting}
+        title="Delete page"
+        className="p-2 mr-2 text-sm text-red-500 hover:text-red-700 rounded"
+      >
+        {deleting ? "Deleting…" : "Delete"}
+      </button>
     </div>
   );
 }

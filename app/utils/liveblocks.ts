@@ -56,3 +56,12 @@ export async function getRoomTitle(roomId: string) {
     return "";
   }
 }
+
+export async function deleteRoom(roomId: string) {
+  try {
+    await liveblocks.deleteRoom(roomId);
+  } catch (err) {
+    console.error("Failed to delete room", roomId, err);
+    throw err;
+  }
+}
