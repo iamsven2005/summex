@@ -1,5 +1,0 @@
-/scripts/*.js
-**/*.css
-**/*.css.map
-!/src/**/*.css
-!/src/**/*.css.map

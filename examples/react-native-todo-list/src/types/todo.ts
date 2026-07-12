@@ -1,3 +1,0 @@
-type Todo = {
-  text: string;
-};

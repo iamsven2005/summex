@@ -1,8 +1,0 @@
-import { defaultLiveblocksVitestConfig } from "@liveblocks/vitest-config";
-
-export default defaultLiveblocksVitestConfig({
-  test: {
-    environment: "happy-dom",
-    setupFiles: ["vitest.setup.ts"],
-  },
-});

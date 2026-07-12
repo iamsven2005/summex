@@ -1,45 +1,56 @@
 {
-  "name": "@liveblocks/monorepo",
+  "name": "@liveblocks-examples/nextjs-notion-like-ai-editor",
+  "description": "This example shows how to build a collaborative text editor with an AI toolbar using Liveblocks, Lexical, Vercel AI SDK, and Next.js.",
+  "license": "Apache-2.0",
   "private": true,
-  "packageManager": "pnpm@10.33.0",
   "scripts": {
-    "build": "turbo run build",
-    "test": "turbo run test",
-    "test:ci": "turbo run test:ci",
-    "test:types": "turbo run test:types",
-    "test:deps": "turbo run test:deps",
-    "lint": "turbo run lint",
-    "lint:package": "turbo run lint:package",
-    "format": "turbo run format",
-    "prepare": "syncpack lint"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "^3.0.20",
+    "@ai-sdk/react": "^3.0.56",
+    "@ai-sdk/rsc": "^2.0.53",
+    "@floating-ui/react-dom": "^2.1.6",
+    "@lexical/code": "0.35.0",
+    "@lexical/link": "0.35.0",
+    "@lexical/list": "0.35.0",
+    "@lexical/markdown": "^0.35.0",
+    "@lexical/react": "0.35.0",
+    "@lexical/rich-text": "0.35.0",
+    "@lexical/selection": "0.35.0",
+    "@lexical/utils": "0.35.0",
+    "@liveblocks/client": "^3.21.0",
+    "@liveblocks/node": "^3.21.0",
+    "@liveblocks/node-lexical": "^3.21.0",
+    "@liveblocks/react": "^3.21.0",
+    "@liveblocks/react-lexical": "^3.21.0",
+    "@liveblocks/react-ui": "^3.21.0",
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-popover": "^1.0.7",
+    "@radix-ui/react-visually-hidden": "^1.0.3",
+    "@types/node": "^18.11.19",
+    "@types/react": "^18.0.38",
+    "@types/react-dom": "^18.0.11",
+    "ai": "^6.0.53",
+    "cmdk": "^1.0.4",
+    "framer-motion": "^11.2.14",
+    "lexical": "0.35.0",
+    "markdown-to-jsx": "^7.5.1",
+    "nanoid": "^5.1.6",
+    "next": "^16.1.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-textarea-autosize": "^8.5.9",
+    "swr": "^2.2.5",
+    "typescript": "^5.2.2",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.18.2",
-    "@types/node": "^24.12.2",
-    "@types/react": "^18.3.17",
-    "@types/react-dom": "^18.3.5",
-    "@vitest/coverage-istanbul": "^4.1.4",
-    "dependency-cruiser": "^17.3.10",
-    "eslint": "^9.39.4",
-    "syncpack": "^14.3.0",
-    "happy-dom": "^20.9.0",
-    "prettier": "^3.8.3",
-    "publint": "^0.3.18",
-    "ts-morph": "^28.0.0",
-    "tsup": "^8.5.1",
-    "turbo": "^2.9.6",
-    "typescript": "^5.9.3",
-    "vitest": "^4.1.4"
-  },
-  "engines": {
-    "node": ">=24.x"
-  },
-  "pnpm": {
-    "peerDependencyRules": {
-      "allowedVersions": {
-        "use-sync-external-store>react": "19",
-        "htmlnano>svgo": "2"
-      }
-    }
+    "autoprefixer": "^10.4.23",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.19"
   }
 }

@@ -1,87 +1,80 @@
 <p align="center">
-  <a href="https://liveblocks.io#gh-light-mode-only"><img src="https://raw.githubusercontent.com/liveblocks/liveblocks/main/.github/assets/header-wordmark-light.svg" alt="Liveblocks"   /></a>
-  <a href="https://liveblocks.io#gh-dark-mode-only"><img src="https://raw.githubusercontent.com/liveblocks/liveblocks/main/.github/assets/header-wordmark-dark.svg" alt="Liveblocks"   /></a>
-</p>
-<p align="center">
-  <a href="https://twitter.com/liveblocks"><img src="https://img.shields.io/badge/liveblocks-message?style=flat&logo=x&color=555&logoColor=fff" alt="X" /></a>
-  <a href="https://liveblocks.io/discord"><img src="https://img.shields.io/discord/913109211746009108?style=flat&label=discord&logo=discord&color=85f&logoColor=fff" alt="Discord" /></a>
-  <a href="https://www.youtube.com/channel/UCDXT5skWxzOorIQrWG5OT2w"><img src="https://img.shields.io/youtube/channel/subscribers/UCDXT5skWxzOorIQrWG5OT2w?style=flat&label=youtube&logo=youtube&color=e14&logoColor=fff" alt="YouTube" /></a>
-  <a href="https://github.com/liveblocks/liveblocks/blob/main/LICENSE"><img src="https://img.shields.io/badge/licenses-Apache--2.0%2C%20AGPL--3.0-green" alt="License" /></a>
+  <a href="https://liveblocks.io#gh-light-mode-only">
+    <img src="https://raw.githubusercontent.com/liveblocks/liveblocks/main/.github/assets/header-light.svg" alt="Liveblocks" />
+  </a>
+  <a href="https://liveblocks.io#gh-dark-mode-only">
+    <img src="https://raw.githubusercontent.com/liveblocks/liveblocks/main/.github/assets/header-dark.svg" alt="Liveblocks" />
+  </a>
 </p>
 
-**[Liveblocks](https://liveblocks.io) gives you the building blocks and
-infrastructure to enable people and AI to work together inside your app.**
+# Notion-like AI Editor (Lexical)
 
-**[Get started for free](https://liveblocks.io/signup)**
+<p>
+  <a href="https://liveblocks.io/examples/notion-like-ai-editor/nextjs-notion-like-ai-editor/preview">
+    <img src="https://img.shields.io/badge/live%20preview-message?style=flat&logo=data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTE2Ljg0OSA0Ljc1SDBsNC44NDggNS4wNzV2Ny4wMDhsMTItMTIuMDgzWk03LjE1IDE5LjI1SDI0bC00Ljg0OS01LjA3NVY3LjE2N2wtMTIgMTIuMDgzWiIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==&color=333" alt="Live Preview" />
+  </a>
+  <a href="https://codesandbox.io/s/github/liveblocks/liveblocks/tree/main/examples/nextjs-notion-like-ai-editor">
+    <img src="https://img.shields.io/badge/open%20in%20codesandbox-message?style=flat&logo=codesandbox&color=333&logoColor=fff" alt="Open in CodeSandbox" />
+  </a>
+  <img src="https://img.shields.io/badge/react-message?style=flat&logo=react&color=0bd&logoColor=fff" alt="React" />
+  <img src="https://img.shields.io/badge/next.js-message?style=flat&logo=next.js&color=07f&logoColor=fff" alt="Next.js" />
+  <img src="https://img.shields.io/badge/lexical-message?style=flat&color=7bf" alt="Lexical" />
+</p>
 
-<img src="./assets/concepts/liveblocks-collaboration-infrastructure.png" alt="Liveblocks Collaboration Infrastructure"   />
+This example shows how to build a collaborative text editor with an AI toolbar using [Liveblocks](https://liveblocks.io), [Lexical](https://lexical.dev/), [Vercel AI SDK](https://sdk.vercel.ai/), and [Next.js](https://nextjs.org/).
 
-## Ready-made features
+As users edit the document, changes will be automatically persisted and synced—allowing for an editor that updates in real-time across clients. Users will also be able to see who see each other’s cursors in the document. Query AI to generate improvements and new content.
 
-Liveblocks includes a set of collaboration building blocks you can use
-individually or together. These ready-made features provide pre-built
-components, hooks, and APIs that handle the complexity of realtime
-collaboration, allowing you to focus on building your product’s unique
-experience.
+<img src="https://raw.githubusercontent.com/liveblocks/liveblocks/main/.github/assets/examples/notion-like-ai-editor.png" width="536" alt="Collaborative Text Editor" />
 
-- [Comments](https://liveblocks.io/comments) - Add contextual comments directly
-  inside your product
-- [Multiplayer](https://liveblocks.io/multiplayer) - Add realtime collaboration
-  to your product experience
-- [AI Agents](https://liveblocks.io/ai-agents) - Add AI collaborators to your
-  product
-- [Notifications](https://liveblocks.io/notifications) - Add notifications to
-  your app to keep users coming back
+## Getting started
 
-## SDKs and packages
+Run the following command to try this example locally:
 
-Packages for specific libraries and frameworks to add Liveblocks-powered
-collaborative experiences to your product. Integrations are designed to serve
-various collaboration use cases such as collaborative text editors, comments,
-notifications, and more.
+```bash
+npx create-liveblocks-app@latest --example nextjs-notion-like-ai-editor --api-key
+```
 
-- [`@liveblocks/client`](https://liveblocks.io/docs/api-reference/liveblocks-client)
-- [`@liveblocks/react`](https://liveblocks.io/docs/api-reference/liveblocks-react)
-- [`@liveblocks/react-ui`](https://liveblocks.io/docs/api-reference/liveblocks-react-ui)
-- [`@liveblocks/react-tiptap`](https://liveblocks.io/docs/api-reference/liveblocks-react-tiptap)
-- [`@liveblocks/react-blocknote`](https://liveblocks.io/docs/api-reference/liveblocks-react-blocknote)
-- [`@liveblocks/node-prosemirror`](https://liveblocks.io/docs/api-reference/liveblocks-node-prosemirror)
-- [`@liveblocks/react-lexical`](https://liveblocks.io/docs/api-reference/liveblocks-react-lexical)
-- [`@liveblocks/node-lexical`](https://liveblocks.io/docs/api-reference/liveblocks-node-lexical)
-- [`@liveblocks/redux`](https://liveblocks.io/docs/api-reference/liveblocks-redux)
-- [`@liveblocks/zustand`](https://liveblocks.io/docs/api-reference/liveblocks-zustand)
-- [`@liveblocks/yjs`](https://liveblocks.io/docs/api-reference/liveblocks-yjs)
-- [`@liveblocks/node`](https://liveblocks.io/docs/api-reference/liveblocks-node)
-- [`@liveblocks/emails`](https://liveblocks.io/docs/api-reference/liveblocks-emails)
-- [`@liveblocks/emails`](https://liveblocks.io/docs/api-reference/liveblocks-emails)
-- [`@liveblocks/chat-sdk-adapter`](https://liveblocks.io/docs/api-reference/liveblocks-chat-sdk-adapter)
-- [Python SDK](https://liveblocks.io/docs/api-reference/liveblocks-python)
-- [`REST API`](https://liveblocks.io/docs/api-reference/rest-api-endpoints)
+This will download the example and ask permission to open your browser, enabling you to automatically get your API key from your [liveblocks.io](https://liveblocks.io) account.
 
-## Developers
+### Manual setup
 
-- [Documentation](https://liveblocks.io/docs) - [`/docs`](./docs)
-- [Guides](https://liveblocks.io/docs/guides) - [`/guides`](./guides)
-- [Tutorial](https://liveblocks.io/docs/tutorial/react/getting-started) -
-  [`/tutorial`](./tutorial)
-- [Examples](https://liveblocks.io/examples) - [`/examples`](./examples)
-- [Changelog](https://liveblocks.io/changelog)
+<details><summary>Read more</summary>
 
-## Community and support
+<p></p>
 
-- [GitHub issues](https://github.com/liveblocks/liveblocks/issues) to file bugs
-  and errors you encounter using Liveblocks.
-- [Discord](https://liveblocks.io/discord) to get involved with the Liveblocks
-  community, ask questions and share tips.
-- [Email](https://liveblocks.io/contact) to contact us directly for support and
-  sales enquiries.
-- [X](https://x.com/liveblocks) to receive updates, announcements, blog posts,
-  and general Liveblocks tips.
+Alternatively, you can set up your project manually:
 
-## License
+- Install all dependencies with `npm install`
+- Create an account on [liveblocks.io](https://liveblocks.io/dashboard)
+- Copy your **secret** key from the [dashboard](https://liveblocks.io/dashboard/apikeys)
+- Create an `.env.local` file and add your **secret** key as the `LIVEBLOCKS_SECRET_KEY` environment variable
+- Run `npm run dev` and go to [http://localhost:3000](http://localhost:3000)
 
-Most of this repository is licensed under the Apache License 2.0, Copyright ©
-2021-present [Liveblocks](https://liveblocks.io). Some components are licensed
-under AGPL-3.0-or-later.
+</details>
 
-See [LICENSE](./LICENSE) for details.
+### Deploy on Vercel
+
+<details><summary>Read more</summary>
+
+<p></p>
+
+To both deploy on [Vercel](https://vercel.com), and run the example locally, use the following command:
+
+```bash
+npx create-liveblocks-app@latest --example nextjs-notion-like-ai-editor --vercel
+```
+
+This will download the example and ask permission to open your browser, enabling you to deploy to Vercel.
+
+</details>
+
+### Develop on CodeSandbox
+
+<details><summary>Read more</summary>
+
+<p></p>
+
+After forking [this example](https://codesandbox.io/s/github/liveblocks/liveblocks/tree/main/examples/nextjs-notion-like-ai-editor) on CodeSandbox, create the `LIVEBLOCKS_SECRET_KEY` environment variable as a [secret](https://codesandbox.io/docs/secrets).
+
+</details>

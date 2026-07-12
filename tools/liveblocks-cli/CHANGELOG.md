@@ -1,1 +1,0 @@
-../../shared/liveblocks-server/CHANGELOG.md
