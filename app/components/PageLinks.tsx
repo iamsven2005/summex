@@ -1,18 +1,85 @@
 "use client";
 
+import { useEffect, useMemo, useState, type DragEvent } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { useState } from "react";
 import { TypedRoomDataWithInfo } from "../utils/liveblocks";
 import { usePageLinks } from "../hooks/usePageLinks";
 
 // Infinitely load all pages
 export function PageLinks() {
   const pathname = usePathname();
+  const [pageOrder, setPageOrder] = useState<string[]>([]);
+  const [draggedPageId, setDraggedPageId] = useState<string | null>(null);
 
   // Fetch all pages for sidebar
   const { data, error, isLoading, size, setSize, reachedEnd, isLoadingMore, mutate } =
     usePageLinks();
+
+  const allRooms = useMemo(
+    () => data?.flatMap((d) => d.rooms) || [],
+    [data]
+  );
+
+  useEffect(() => {
+    if (!allRooms.length) {
+      return;
+    }
+
+    const stored = typeof window !== "undefined" ? window.localStorage.getItem("page-order") : null;
+    const roomIds = allRooms.map((room) => room.id);
+    const savedOrder = stored ? JSON.parse(stored) as string[] : [];
+
+    if (!savedOrder?.length) {
+      setPageOrder(roomIds);
+      window.localStorage.setItem("page-order", JSON.stringify(roomIds));
+      return;
+    }
+
+    const missingIds = roomIds.filter((id) => !savedOrder.includes(id));
+    const filtered = savedOrder.filter((id) => roomIds.includes(id));
+    const mergedOrder = [...filtered, ...missingIds];
+
+    if (JSON.stringify(mergedOrder) !== JSON.stringify(savedOrder)) {
+      window.localStorage.setItem("page-order", JSON.stringify(mergedOrder));
+    }
+
+    setPageOrder(mergedOrder);
+  }, [allRooms]);
+
+  const orderedRooms = useMemo(() => {
+    if (!pageOrder.length) {
+      return allRooms;
+    }
+
+    const roomMap = new Map(allRooms.map((room) => [room.id, room]));
+    const ordered = pageOrder
+      .map((id) => roomMap.get(id))
+      .filter((room): room is TypedRoomDataWithInfo => Boolean(room));
+
+    const missing = allRooms.filter((room) => !pageOrder.includes(room.id));
+    return [...ordered, ...missing];
+  }, [allRooms, pageOrder]);
+
+  const updatePageOrder = (newOrder: string[]) => {
+    setPageOrder(newOrder);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("page-order", JSON.stringify(newOrder));
+    }
+  };
+
+  const handleReorder = (fromId: string, toId: string) => {
+    if (fromId === toId) return;
+    const current = [...pageOrder];
+    const fromIndex = current.indexOf(fromId);
+    const toIndex = current.indexOf(toId);
+    if (fromIndex === -1 || toIndex === -1) return;
+
+    current.splice(fromIndex, 1);
+    current.splice(toIndex, 0, fromId);
+
+    updatePageOrder(current);
+  };
 
   if (error) {
     return <div className="p-2">Error loading pages</div>;
@@ -42,16 +109,24 @@ export function PageLinks() {
 
   return (
     <div className="overflow-y-auto p-2 flex flex-col gap-0.5">
-      {data.map((d) =>
-        d.rooms.map((room) => (
-          <PageLink
-            key={room.id}
-            room={room}
-            active={pathname === `/${room.metadata.pageId}`}
-            onDelete={() => mutate()}
-          />
-        ))
-      )}
+      {orderedRooms.map((room) => (
+        <PageLink
+          key={room.id}
+          room={room}
+          active={pathname === `/${room.metadata.pageId}`}
+          onDelete={() => mutate()}
+          draggable
+          onDragStart={() => setDraggedPageId(room.id)}
+          onDragOver={(event) => {
+            event.preventDefault();
+          }}
+          onDrop={() => {
+            if (draggedPageId) {
+              handleReorder(draggedPageId, room.id);
+            }
+          }}
+        />
+      ))}
 
       {!reachedEnd ? (
         <button
@@ -70,10 +145,18 @@ function PageLink({
   room,
   active,
   onDelete,
+  draggable,
+  onDragStart,
+  onDragOver,
+  onDrop,
 }: {
   room: TypedRoomDataWithInfo;
   active: boolean;
   onDelete?: () => void;
+  draggable?: boolean;
+  onDragStart?: () => void;
+  onDragOver?: (event: DragEvent<HTMLDivElement>) => void;
+  onDrop?: () => void;
 }) {
   const [deleting, setDeleting] = useState(false);
 
@@ -94,6 +177,19 @@ function PageLink({
 
   return (
     <div
+      draggable={draggable}
+      onDragStart={(event) => {
+        if (onDragStart) onDragStart();
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", room.id);
+      }}
+      onDragOver={(event) => {
+        event.preventDefault();
+        if (onDragOver) onDragOver(event);
+      }}
+      onDrop={() => {
+        if (onDrop) onDrop();
+      }}
       data-active={active || undefined}
       className="flex justify-between items-center hover:bg-gray-200/80 transition-colors rounded text-medium text-gray-700 hover:text-gray-900 pr-2 text-sm font-medium data-[active]:bg-gray-200/80 data-[active]:text-gray-900 min-h-8"
     >

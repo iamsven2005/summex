@@ -12,19 +12,35 @@ const liveblocks = new Liveblocks({
 export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest) {
-  // Get the current user's unique id and info from your database
-  const user = await getSession(request);
+  try {
+    if (!process.env.LIVEBLOCKS_SECRET_KEY) {
+      throw new Error("Missing LIVEBLOCKS_SECRET_KEY");
+    }
 
-  // Create a Liveblocks session for the current user
-  // userInfo is made available in Liveblocks presence hooks, e.g. useOthers
-  const session = liveblocks.prepareSession(`${user.id}`, {
-    userInfo: user.info,
-  });
+    const user = await getSession(request);
 
-  // Use a naming pattern to allow access to rooms with a wildcard
-  session.allow(`liveblocks:examples:*`, ["*:write"]);
+    const session = liveblocks.prepareSession(`${user.id}`, {
+      userInfo: user.info,
+    });
 
-  // Authorize the user and return the result
-  const { body, status } = await session.authorize();
-  return new Response(body, { status });
+    session.allow(`liveblocks:examples:*`, ["*:write"]);
+
+    const { body, status } = await session.authorize();
+    return new Response(body, { status, headers: { "Content-Type": "application/json" } });
+  } catch (error) {
+    console.error("Liveblocks auth failed", error);
+    const message = error instanceof Error ? error.message : "Unknown auth error";
+    const status = message === "User not found" ? 401 : 500;
+    const response = new Response(JSON.stringify({ message }), {
+      status,
+      headers: { "Content-Type": "application/json" },
+    });
+    if (status === 401) {
+      response.headers.append(
+        "Set-Cookie",
+        "doc-session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0"
+      );
+    }
+    return response;
+  }
 }

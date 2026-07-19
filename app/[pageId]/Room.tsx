@@ -1,7 +1,10 @@
 "use client";
 
-import { RoomProvider } from "@liveblocks/react/suspense";
-import { ReactNode } from "react";
+import {
+  RoomProvider,
+  useRoomSubscriptionSettings,
+} from "@liveblocks/react/suspense";
+import { ReactNode, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { getRoomId } from "../config";
 
@@ -17,16 +20,28 @@ export function Room({
   return (
     <RoomProvider
       id={roomId}
-      initialPresence={{
-        cursor: null,
-      }}
+      initialPresence={{}}
       initialStorage={{
         title: "Untitled document",
       }}
     >
+      <EnableMentionNotifications />
       {children}
     </RoomProvider>
   );
+}
+
+/** Keep inline @mentions enabled for the current user in this document. */
+function EnableMentionNotifications() {
+  const [{ settings }, updateSettings] = useRoomSubscriptionSettings();
+
+  useEffect(() => {
+    if (settings.textMentions !== "mine") {
+      updateSettings({ textMentions: "mine" });
+    }
+  }, [settings.textMentions, updateSettings]);
+
+  return null;
 }
 
 /**

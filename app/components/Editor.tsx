@@ -12,6 +12,7 @@ import { LinkNode } from "@lexical/link";
 import { HorizontalRuleNode } from "@lexical/react/LexicalHorizontalRuleNode";
 import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
+import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import {
   AnchoredThreads,
@@ -28,10 +29,18 @@ import { DocumentName } from "./DocumentName";
 import { FloatingToolbar } from "./FloatingToolbar";
 import { SlashCommandPlugin } from "./SlashCommandPlugin";
 import { SearchPlugin } from "./SearchPlugin";
+import { ExportPlugin } from "./ExportPlugin";
+import { ImagePlugin } from "./ImagePlugin";
+import { ImageNode } from "../nodes/ImageNode";
+import { TableReorderPlugin } from "./TableReorderPlugin";
+
+// Change this value whenever the registered node schema changes. Lexical only
+// reads its node registry when the composer mounts, including during Fast Refresh.
+const EDITOR_SCHEMA_VERSION = "doc-editor-v2-images";
 
 // Wrap your initial config with `liveblocksConfig`
 const initialConfig = liveblocksConfig({
-  namespace: "Demo",
+  namespace: EDITOR_SCHEMA_VERSION,
   nodes: [
     HorizontalRuleNode,
     CodeNode,
@@ -43,12 +52,17 @@ const initialConfig = liveblocksConfig({
     TableNode,
     TableRowNode,
     TableCellNode,
+    ImageNode,
   ],
   onError: (error: unknown) => {
     console.error(error);
     throw error;
   },
   theme: {
+    table: "lexical-table",
+    tableCell: "lexical-table-cell",
+    tableCellHeader: "lexical-table-cell-header",
+    tableRow: "lexical-table-row",
     text: {
       bold: "lexical-bold",
       italic: "lexical-italic",
@@ -72,7 +86,10 @@ export function Editor() {
   };
 
   return (
-    <LexicalComposer initialConfig={initialConfig}>
+    <LexicalComposer
+      key={EDITOR_SCHEMA_VERSION}
+      initialConfig={initialConfig}
+    >
       <div
         // Target the cursors and raise their z-index above the editor
         className="first:*:z-10 contents"
@@ -119,6 +136,7 @@ export function Editor() {
                     <div className="mx-8 mt-4 bg-gray-200/40 animate-pulse w-full h-32 rounded-lg" />
                   ) : (
                     <section className="relative">
+                      <ImagePlugin />
                       {/* The editor */}
                       <RichTextPlugin
                         contentEditable={
@@ -149,8 +167,11 @@ export function Editor() {
           </div>
           <PreserveSelectionPlugin />
           <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+          <TablePlugin hasHorizontalScroll />
+          <TableReorderPlugin />
           <SlashCommandPlugin />
           <SearchPlugin />
+          <ExportPlugin />
         </LiveblocksPlugin>
       </div>
     </LexicalComposer>

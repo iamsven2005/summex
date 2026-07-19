@@ -24,11 +24,21 @@ import {
   KEY_DOWN_COMMAND,
   $getSelection,
   $isRangeSelection,
+  $isTextNode,
 } from "lexical";
 import { $setBlocksType } from "@lexical/selection";
 import { createPortal } from "react-dom";
+import { OPEN_IMAGE_UPLOAD_COMMAND } from "../commands/image";
 
 const COMMANDS = [
+  {
+    id: "image",
+    label: "Image",
+    description: "Upload an image from your device",
+    action: (editor: any) => {
+      editor.dispatchCommand(OPEN_IMAGE_UPLOAD_COMMAND, undefined);
+    },
+  },
   {
     id: "table",
     label: "Table",
@@ -174,12 +184,31 @@ export function SlashCommandPlugin() {
       KEY_DOWN_COMMAND,
       (event: KeyboardEvent) => {
         if (event.key === "/" && !event.shiftKey && !event.metaKey && !event.ctrlKey && !event.altKey) {
-          const selection = window.getSelection();
-          if (!selection?.rangeCount) {
+          const selection = $getSelection();
+          if (!$isRangeSelection(selection) || !selection.isCollapsed()) {
             return false;
           }
 
-          const range = selection.getRangeAt(0);
+          const anchor = selection.anchor;
+          const anchorNode = anchor.getNode();
+          let shouldOpen = false;
+
+          if ($isTextNode(anchorNode)) {
+            const textBefore = anchorNode.getTextContent().slice(0, anchor.offset);
+            shouldOpen = textBefore === "" || /\s$/.test(textBefore);
+          } else {
+            shouldOpen = true;
+          }
+
+          if (!shouldOpen) {
+            return false;
+          }
+
+          const range = window.getSelection()?.getRangeAt(0);
+          if (!range) {
+            return false;
+          }
+
           const rect = range.getBoundingClientRect();
           setPosition({
             top: rect.bottom + window.scrollY,
@@ -219,6 +248,12 @@ export function SlashCommandPlugin() {
             value={query}
             onValueChange={setQuery}
             placeholder="Type a command..."
+            onKeyDown={(event) => {
+              if (event.key === "Backspace" && query === "") {
+                setOpen(false);
+                event.preventDefault();
+              }
+            }}
             className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
           />
         </div>

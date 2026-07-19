@@ -37,6 +37,42 @@ html {
   @apply bg-indigo-100/75;
 }
 
+/* Keep collaborative text carets and selections above editor controls. */
+.lb-lexical-cursors {
+  z-index: 50 !important;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.lb-lexical-cursors * {
+  pointer-events: none;
+}
+
+.lexical-table {
+  width: 100%;
+  margin: 1rem 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.lexical-table-cell {
+  min-width: 80px;
+  border: 1px solid #d1d5db;
+  padding: 0.5rem;
+  vertical-align: top;
+}
+
+.lexical-table-cell-header {
+  background: #f3f4f6;
+  font-weight: 600;
+}
+
+.lexical-table-drop-target {
+  outline: 2px solid #6366f1;
+  outline-offset: -2px;
+  background: #eef2ff;
+}
+
 p {
   margin: 0.8rem 0;
 }

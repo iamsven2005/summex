@@ -27,30 +27,6 @@ export default async function Page({
 
       <Editor />
 
-      <LiveblocksBadge />
     </Room>
-  );
-}
-
-function LiveblocksBadge() {
-  return (
-    <a
-      className="fixed bottom-4 right-4"
-      href="https://liveblocks.io"
-      rel="noreferrer"
-      target="_blank"
-    >
-      <picture>
-        <source
-          srcSet="https://liveblocks.io/badge-dark.svg"
-          media="(prefers-color-scheme: dark)"
-        />
-        <img
-          src="https://liveblocks.io/badge-light.svg"
-          alt="Made with Liveblocks"
-          className=""
-        />
-      </picture>
-    </a>
   );
 }

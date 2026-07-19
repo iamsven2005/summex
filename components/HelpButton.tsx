@@ -3,10 +3,7 @@
 import { CSSProperties, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-const EXAMPLE_NAME = "Notion-like AI Editor";
-
-const EXAMPLE_URL =
-  "https://liveblocks.io/examples/notion-like-ai-editor/nextjs-notion-like-ai-editor";
+const EXAMPLE_NAME = "Doc";
 
 type Feature = {
   icon: ReactNode;
@@ -221,15 +218,7 @@ export function HelpButton() {
             <div style={styles.header}>
               <div>
                 <h2 id="lb-help-title" style={styles.title}>
-                  <a
-                    className="lb-help-title-link"
-                    style={styles.titleLink}
-                    href={EXAMPLE_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {EXAMPLE_NAME}
-                  </a>
+                  {EXAMPLE_NAME}
                 </h2>
                 <p style={styles.desc}>How to use this example</p>
               </div>
